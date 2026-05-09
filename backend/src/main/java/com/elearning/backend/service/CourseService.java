@@ -35,9 +35,14 @@ public class CourseService {
 
         return CourseResponse.from(courseRepository.save(course));
     }
+    public CourseResponse findById(Long id) {
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cours introuvable"));
+        return CourseResponse.from(course);
+    }
 
     // Voir tous les cours publiés
-    public List<CourseResponse> getAllPublished() {
+   /* public List<CourseResponse> getAllPublished() {
         return courseRepository.findByStatus(CourseStatus.PUBLISHED)
                 .stream()
                 .map(CourseResponse::from)
@@ -53,7 +58,7 @@ public class CourseService {
                 .stream()
                 .map(CourseResponse::from)
                 .toList();
-    }
+    }*/
 
     // Publier un cours
     public CourseResponse publish(Long courseId, String profEmail) {
@@ -76,5 +81,24 @@ public class CourseService {
                 .orElseThrow(() -> new RuntimeException("Cours introuvable"));
 
         courseRepository.delete(course);
+    }
+
+    // Remplace findByStatus() par findByStatusWithProf()
+    public List<CourseResponse> getAllPublished() {
+        return courseRepository
+                .findByStatusWithProf(CourseStatus.PUBLISHED)
+                .stream()
+                .map(CourseResponse::from)
+                .toList();
+    }
+
+    // Remplace findByProf() par findByProfWithProf()
+    public List<CourseResponse> getMyCourses(String profEmail) {
+        User prof = userRepository.findByEmail(profEmail)
+                .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
+        return courseRepository.findByProfWithProf(prof)
+                .stream()
+                .map(CourseResponse::from)
+                .toList();
     }
 }

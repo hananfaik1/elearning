@@ -22,6 +22,10 @@ public class CourseController {
     public ResponseEntity<List<CourseResponse>> getAllPublished() {
         return ResponseEntity.ok(courseService.getAllPublished());
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<CourseResponse> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(courseService.findById(id));
+    }
 
     @PostMapping
     @PreAuthorize("hasRole('PROF')")

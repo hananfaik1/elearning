@@ -57,7 +57,7 @@ export default function MesCours() {
                             <div style={s.list}>
                                 {items.map((item, i) => (
                                     <div key={item.id} style={s.card} className="fadeUp"
-                                         style={{...s.card, animationDelay:`${i*.08}s`}} onClick={() => navigate(`/courses/${item.id || item.courseId}`)}>
+                                         style={{...s.card, animationDelay:`${i*.08}s`}} onClick={() => navigate(`/courses/${item.courseId || item.id}`)}>
 
                                         <div style={s.cardLeft}>
                                             <span style={s.category}>{item.category}</span>

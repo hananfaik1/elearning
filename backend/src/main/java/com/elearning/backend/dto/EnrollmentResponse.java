@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Data
 public class EnrollmentResponse {
     private Long id;
+    private Long courseId;
     private String courseTitle;
     private String category;
     private EnrollmentStatus status;
@@ -19,6 +20,7 @@ public class EnrollmentResponse {
     public static EnrollmentResponse from(Enrollment e) {
         EnrollmentResponse r = new EnrollmentResponse();
         r.setId(e.getId());
+        r.setCourseId(e.getCourse().getId());
         r.setCourseTitle(e.getCourse().getTitle());
         r.setCategory(e.getCourse().getCategory());
         r.setStatus(e.getStatus());

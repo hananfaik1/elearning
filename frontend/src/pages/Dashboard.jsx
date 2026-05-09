@@ -79,8 +79,9 @@ export default function Dashboard() {
                         : (
                             <div style={s.recentGrid}>
                                 {recent.map((item, i) => (
+
                                     <div key={i} style={s.recentCard} className="fadeUp"
-                                         style={{ ...s.recentCard, animationDelay: `${i * 0.1}s` }}>
+                                         style={{ ...s.recentCard, animationDelay: `${i * 0.1}s` }} onClick={() => navigate(`/courses/${item.courseId || item.id}`)}>
                                         <h3 style={s.recentTitle}>
                                             {item.title || item.courseTitle}
                                         </h3>
