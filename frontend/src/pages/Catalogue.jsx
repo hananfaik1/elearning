@@ -82,11 +82,9 @@ export default function Catalogue() {
                                     }}
                                 />
 
-                                <button
-                                    style={s.enrollBtn}
-                                    onClick={() => handleEnroll(course)}
-                                >
-                                    S'inscrire à ce cours →
+                                <button style={s.enrollBtn}
+                                        onClick={() => navigate(`/courses/${course.id}`)}>
+                                    Voir le cours →
                                 </button>
                             </div>
                         ))}

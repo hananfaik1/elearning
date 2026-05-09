@@ -10,7 +10,7 @@ export default function MesCours() {
     useNavigate();
     const [items, setItems]     = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const navigate = useNavigate();
     const load = () => {
         const url = user?.role === 'PROF' ? '/api/courses/my' : '/api/enrollments/my';
         api.get(url).then(r => setItems(r.data)).finally(() => setLoading(false));
@@ -57,7 +57,7 @@ export default function MesCours() {
                             <div style={s.list}>
                                 {items.map((item, i) => (
                                     <div key={item.id} style={s.card} className="fadeUp"
-                                         style={{...s.card, animationDelay:`${i*.08}s`}}>
+                                         style={{...s.card, animationDelay:`${i*.08}s`}} onClick={() => navigate(`/courses/${item.id || item.courseId}`)}>
 
                                         <div style={s.cardLeft}>
                                             <span style={s.category}>{item.category}</span>

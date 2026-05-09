@@ -1,6 +1,7 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LogOut, BookOpen, LayoutDashboard, PlusCircle, Sparkles, Library } from 'lucide-react';
+//import { LogOut, BookOpen, LayoutDashboard, PlusCircle, Sparkles, Library } from 'lucide-react';
+import { LogOut, BookOpen, LayoutDashboard, PlusCircle, Sparkles, Library, History } from 'lucide-react';
 
 export default function Navbar() {
     const { user, logout } = useAuth();
@@ -15,6 +16,7 @@ export default function Navbar() {
             { to: '/mes-cours',     icon: <BookOpen size={16}/>,        label: 'Mes Cours' },
             { to: '/create-course', icon: <PlusCircle size={16}/>,      label: 'Créer' },
             { to: '/generate-ai',   icon: <Sparkles size={16}/>,        label: 'IA' },
+            { to: '/ai-generations', icon: <History size={16}/>, label: 'Générations' },
         ]
         : [
             { to: '/dashboard',  icon: <LayoutDashboard size={16}/>, label: 'Dashboard' },

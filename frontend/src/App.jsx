@@ -8,6 +8,8 @@ import Catalogue     from './pages/Catalogue';
 import MesCours      from './pages/MesCours';
 import CreateCourse  from './pages/CreateCourse';
 import GenerateAI    from './pages/GenerateAI';
+import CourseDetail   from './pages/CourseDetail';
+import AIGenerations  from './pages/AIGenerations';
 
 export default function App() {
     return (
@@ -33,6 +35,12 @@ export default function App() {
                         <ProtectedRoute role="PROF"><GenerateAI/></ProtectedRoute>}/>
 
                     <Route path="*" element={<Navigate to="/login"/>}/>
+
+                    <Route path="/courses/:id" element={
+                        <ProtectedRoute><CourseDetail/></ProtectedRoute>}/>
+
+                    <Route path="/ai-generations" element={
+                        <ProtectedRoute role="PROF"><AIGenerations/></ProtectedRoute>}/>
                 </Routes>
             </BrowserRouter>
         </AuthProvider>
