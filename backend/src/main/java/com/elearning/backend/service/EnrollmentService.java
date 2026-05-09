@@ -53,7 +53,7 @@ public class EnrollmentService {
                                     ProgressRequest request) {
         Enrollment enrollment = getEnrollmentForStudent(enrollmentId, studentEmail);
 
-        enrollment.setStatus(EnrollmentStatus.NOT_STARTED);
+        enrollment.setStatus(EnrollmentStatus.PAUSED);
         enrollment.setLastPositionSec(request.getPositionSec());
         enrollment.setProgressPercent(request.getProgressPercent());
 
