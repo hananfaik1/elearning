@@ -24,28 +24,39 @@ export default function CourseDetail() {
     const [blobUrl, setBlobUrl]       = useState(null);   // URL blob pour le PDF
     const [pdfLoading, setPdfLoading] = useState(false);
 
-    // Quand on ouvre un fichier PDF → on le charge en blob via axios (gère l'auth + CORS)
+    // Quand on ouvre un fichier PDF → charge en blob via axios (auth + CORS)
+    // Toutes les setState sont dans des callbacks async → pas de cascade de renders
     useEffect(() => {
-        if (!activeFile) {
-            // Libérer l'URL blob précédente pour éviter les fuites mémoire
-            if (blobUrl) { URL.revokeObjectURL(blobUrl); setBlobUrl(null); }
-            return;
-        }
-        if (activeFile.fileType !== 'PDF') return;
+        // Pas de PDF actif → on nettoie dans le cleanup uniquement
+        if (!activeFile || activeFile.fileType !== 'PDF') return;
 
-        setPdfLoading(true);
-        api.get(`/api/files/download/${activeFile.fileName}`, { responseType: 'blob' })
-            .then(res => {
-                const blob = new Blob([res.data], { type: 'application/pdf' });
-                const url  = URL.createObjectURL(blob);
-                setBlobUrl(url);
+        let cancelled = false;   // évite les setState sur composant démonté
+        let objectUrl = null;
+
+        Promise.resolve()
+            .then(() => {
+                if (cancelled) return null;
+                setPdfLoading(true);
+                return api.get(`/api/files/download/${activeFile.fileName}`, { responseType: 'blob' });
             })
-            .catch(() => setBlobUrl(null))
-            .finally(() => setPdfLoading(false));
+            .then(res => {
+                if (!res || cancelled) return;
+                const blob = new Blob([res.data], { type: 'application/pdf' });
+                objectUrl = URL.createObjectURL(blob);
+                setBlobUrl(objectUrl);
+            })
+            .catch(() => {
+                if (!cancelled) setBlobUrl(null);
+            })
+            .finally(() => {
+                if (!cancelled) setPdfLoading(false);
+            });
 
         return () => {
-            // cleanup si l'effet se relance
-            if (blobUrl) URL.revokeObjectURL(blobUrl);
+            cancelled = true;
+            if (objectUrl) URL.revokeObjectURL(objectUrl);
+            setBlobUrl(null);
+            setPdfLoading(false);
         };
     }, [activeFile]);
 
