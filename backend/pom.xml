@@ -93,6 +93,17 @@
 			<groupId>org.springframework.ai</groupId>
 			<artifactId>spring-ai-openai-spring-boot-starter</artifactId>
 		</dependency>
+		<!-- PgVector Store (RAG) -->
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-pgvector-store-spring-boot-starter</artifactId>
+		</dependency>
+
+		<!-- Embeddings locaux ONNX (all-MiniLM-L6-v2) -->
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-transformers-spring-boot-starter</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

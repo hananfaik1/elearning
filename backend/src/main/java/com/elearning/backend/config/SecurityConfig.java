@@ -41,6 +41,7 @@ public class SecurityConfig {
                         .requestMatchers("/test").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/courses").permitAll()
                         .requestMatchers("/api/files/download/**").permitAll()
+                        .requestMatchers("/recommendations/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter,

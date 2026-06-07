@@ -61,6 +61,7 @@ public class CourseService {
     }*/
 
     // Publier un cours
+    private final CourseIndexingService courseIndexingService;
     public CourseResponse publish(Long courseId, String profEmail) {
         User prof = userRepository.findByEmail(profEmail)
                 .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
@@ -69,7 +70,10 @@ public class CourseService {
                 .orElseThrow(() -> new RuntimeException("Cours introuvable"));
 
         course.setStatus(CourseStatus.PUBLISHED);
-        return CourseResponse.from(courseRepository.save(course));
+        Course saved = courseRepository.save(course);
+        courseIndexingService.indexCourse(saved);
+        return CourseResponse.from(saved);
+
     }
 
     // Supprimer un cours
@@ -79,7 +83,7 @@ public class CourseService {
 
         Course course = courseRepository.findByIdAndProf(courseId, prof)
                 .orElseThrow(() -> new RuntimeException("Cours introuvable"));
-
+        courseIndexingService.deleteCourseFromIndex(courseId);
         courseRepository.delete(course);
     }
 

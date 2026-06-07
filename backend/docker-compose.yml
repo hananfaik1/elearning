@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:16
+    image: pgvector/pgvector:pg16
     container_name: elearning-postgres
     environment:
       POSTGRES_DB: elearning_db

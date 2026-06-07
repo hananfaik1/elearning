@@ -10,6 +10,7 @@ import CreateCourse  from './pages/CreateCourse';
 import GenerateAI    from './pages/GenerateAI';
 import CourseDetail   from './pages/CourseDetail';
 import AIGenerations  from './pages/AIGenerations';
+import Recommendations from "./pages/Recommendations";
 
 export default function App() {
     return (
@@ -41,6 +42,7 @@ export default function App() {
 
                     <Route path="/ai-generations" element={
                         <ProtectedRoute role="PROF"><AIGenerations/></ProtectedRoute>}/>
+                    <Route path="/recommendations" element={<Recommendations />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>

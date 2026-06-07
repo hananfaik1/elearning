@@ -22,6 +22,7 @@ export default function Navbar() {
             { to: '/dashboard',  icon: <LayoutDashboard size={16}/>, label: 'Dashboard' },
             { to: '/catalogue',  icon: <Library size={16}/>,         label: 'Catalogue' },
             { to: '/mes-cours',  icon: <BookOpen size={16}/>,        label: 'Mes Cours' },
+            { to: "/recommendations",  icon: <BookOpen size={16}/>,        label: 'Recommandations' },
         ];
 
     return (
